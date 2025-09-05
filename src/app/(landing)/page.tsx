@@ -1,6 +1,8 @@
 import { SignUpButton } from "@clerk/nextjs";
 import { ArrowRightIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import TestIcon from "./_icons/logo";
 
 export default function HomePage() {
   return (
@@ -23,8 +25,31 @@ export default function HomePage() {
           <h2 className="text-3xl text-center text-balance">
             Second section text
           </h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-16">
-
+          <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-16">
+            <Link href="https://youtube.com/@kotakunp">
+              <TestIcon />
+            </Link>
+            <Link href="https://youtube.com/@kotakunp">
+              <TestIcon />
+            </Link>
+            <Link href="https://youtube.com/@kotakunp">
+              <TestIcon />
+            </Link>
+            <Link href="https://youtube.com/@kotakunp">
+              <TestIcon />
+            </Link>
+            <Link href="https://youtube.com/@kotakunp">
+              <TestIcon />
+            </Link>
+            <Link href="https://youtube.com/@kotakunp">
+              <TestIcon />
+            </Link>
+            <Link href="https://youtube.com/@kotakunp">
+              <TestIcon />
+            </Link>
+            <Link href="https://youtube.com/@kotakunp">
+              <TestIcon />
+            </Link>
           </div>
         </div>
       </section>
