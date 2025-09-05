@@ -5,7 +5,6 @@ export default function LandingLayout({ children }: { children: ReactNode }) {
   return (
     <div className="selection:bg-pink-200">
         <NavBar />
-        teststststs
         {children}
     </div>
   )
