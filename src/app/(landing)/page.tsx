@@ -23,6 +23,9 @@ export default function HomePage() {
           <h2 className="text-3xl text-center text-balance">
             Second section text
           </h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-16">
+
+          </div>
         </div>
       </section>
     </>
