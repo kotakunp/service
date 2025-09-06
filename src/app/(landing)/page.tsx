@@ -8,6 +8,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { formatCompactNumber } from "@/lib/formatters";
 import { ReactNode } from "react";
 import { cn } from "@/lib/utils";
+import { BrandLogo } from "../components/BrandLogo";
 
 export default function HomePage() {
   return (
@@ -71,6 +72,46 @@ export default function HomePage() {
           ))}
         </div>
       </section>
+      <footer className="container mx-auto pt-16 pb-8 flex flex-col sm:flex-row gap-8 sm:gap-4 justify-between items-start">
+        <Link href="/">
+          <BrandLogo />
+        </Link>
+        <div className="flex flex-col sm:flex-row gap-8">
+          <div className="flex flex-col gap-8">
+            <FooterLinkGroup title="About" links={[
+            { label: "EzMuzik services", href: "#"},
+            { label: "Muzik labels", href: "#"},
+          ]}
+          />
+          </div>
+          <div className="flex flex-col gap-8">
+            <FooterLinkGroup
+              title="Line up"
+              links={[
+                { label: "Artists", href: "#" },
+                { label: "Producers", href: "#" },
+                { label: "Engineers", href: "#" },
+              ]}
+            />
+          </div>
+          <div className="flex flex-col gap-8">
+            <FooterLinkGroup
+              title="Request"
+              links={[
+                { label: "Submit request", href: "#" }
+              ]}
+            />
+            <FooterLinkGroup
+              title="Products"
+              links={[
+                { label: "Vocal synth", href: "#" },
+                { label: "Virtual models", href: "#" },
+                { label: "VST Plugins", href: "#" },
+              ]}
+            />
+          </div>
+        </div>
+      </footer>
     </>
   )
 }
@@ -127,3 +168,17 @@ function Feature({ children, className }: { children: ReactNode, className?: str
   )
 }
 
+function FooterLinkGroup ({ title, links, }: {title: string; links: { label: string; href: string }[]}) {
+  return (
+    <div className="flex flex-col gap-4">
+      <h3 className="font-semibold">{title}</h3>
+      <ul className="flex flex-col gap-2 text-sm">
+        {links.map(link => (
+          <li key={`${link.label}`}>
+            <Link href={link.href}>{link.label}</Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
