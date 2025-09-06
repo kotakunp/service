@@ -5,8 +5,8 @@ export function TestIcon(svgProps: ComponentProps<"svg">) {
   return (
     <svg
     xmlns="http://www.w3.org/2000/svg"
-    width={300}
-    height={300}
+    width={200}
+    height={200}
     viewBox="-5.5 0 32 32"
     fill="currentColor"
     aria-hidden="true"
