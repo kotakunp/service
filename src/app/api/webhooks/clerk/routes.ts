@@ -7,9 +7,9 @@ import {
   getUserSubscription,
 } from "@/server/db/subscription"
 import { deleteUser } from "@/server/db/users"
-import { Stripe } from "stripe"
+/* import { Stripe } from "stripe" 
 
-const stripe = new Stripe(env.STRIPE_SECRET_KEY)
+const stripe = new Stripe(env.STRIPE_SECRET_KEY) */
 
 export async function POST(req: Request) {
   const headerPayload = headers()
