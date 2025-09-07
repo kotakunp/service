@@ -1,10 +1,10 @@
 import { getProducts } from "@/server/db/products";
 import { auth } from "@clerk/nextjs/server";
-import { NoProducts } from "./_components/NoProducts";
+import { NoProducts } from "./_components/NoProduct";
 import Link from "next/link";
 import { ArrowRightIcon, PlusIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ProductGrid } from "./_components/ProductGrid";
+import { ProductGrid } from "./_components/productGrid";
 import { HasPermission } from "@/components/HasPermission";
 import { canAccessAnalytics } from "@/server/permissions";
 import {
