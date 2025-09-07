@@ -1,3 +1,7 @@
+export type TierNames = keyof typeof pricingTiers
+export type PaidTierNames = Exclude<TierNames, "Free">
+
+
 export const pricingTiers = {
     Free: {
         name: "Free",
