@@ -29,6 +29,7 @@ export async function createUserSubscription(
   return newSubscription
 }
 
+
 export function getUserSubscription(userId: string) {
   const cacheFn = dbCache(getUserSubscriptionInternal, {
     tags: [getUserTag(userId, CACHE_TAGS.subscription)],
@@ -62,6 +63,10 @@ export async function updateUserSubscription(
 
 export async function getUserSubscriptionTier(userId: string) {
   const subscription = await getUserSubscription(userId)
+  
+  if (!subscription) {
+    return pricingTiers.Free
+  }
 
   if (subscription == null) throw new Error("User has no subscription")
 

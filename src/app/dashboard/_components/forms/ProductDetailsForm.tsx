@@ -62,12 +62,12 @@ export function ProductDetailsForm({
         onSubmit={form.handleSubmit(onSubmit)}
         className="flex gap-6 flex-col"
       >
-        <div className="grid gap-6 grid-cols-1 lg:grid-cols-2">
+        <div className="grid gap-6 grid-cols-1 lg:grid-cols-2 items-start">
           <FormField
             control={form.control}
             name="name"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="flex flex-col">
                 <FormLabel>
                   Product Name
                   <RequiredLabelIcon />
@@ -75,6 +75,7 @@ export function ProductDetailsForm({
                 <FormControl>
                   <Input {...field} />
                 </FormControl>
+                <FormDescription>&nbsp;</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -83,7 +84,7 @@ export function ProductDetailsForm({
             control={form.control}
             name="url"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="flex flex-col">
                 <FormLabel>
                   Enter your website URL
                   <RequiredLabelIcon />

@@ -30,11 +30,14 @@ export function clearFullCache() {
   revalidateTag("*")
 }
 
-export function dbCache<T extends (...args: unknown[]) => Promise<unknown>>(
-  cb: Parameters<typeof unstable_cache<T>>[0],
+export function dbCache<Args extends unknown[], R>(
+  cb: (...args: Args) => Promise<R>,
   { tags }: { tags: ValidTags[] }
 ) {
-  return cache(unstable_cache<T>(cb, undefined, { tags: [...tags, "*"] }))
+  return (...args: Args): Promise<R> => {
+    const cachedFn = unstable_cache(cb, undefined, { tags: [...tags, "*"] });
+    return cache(cachedFn)(...args);
+  };
 }
 
 export function revalidateDbCache({

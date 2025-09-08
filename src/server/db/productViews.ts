@@ -32,7 +32,7 @@ export function getViewsByCountryChartData({
   interval,
 }: {
   timezone: string
-  productId?: string
+  productId?: string | undefined
   userId: string
   interval: (typeof CHART_INTERVALS)[keyof typeof CHART_INTERVALS]
 }) {
