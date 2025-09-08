@@ -40,7 +40,7 @@ export default async function SubscriptionPage() {
   return (
     <>
       <h1 className="mb-6 text-3xl font-semibold">Your Subscription</h1>
-      <div className="flex flex-col gap-8 mb-8">
+      <div className="flex flex-col gap-8 mb-8 container mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <Card>
             <CardHeader>
@@ -94,7 +94,7 @@ export default async function SubscriptionPage() {
           </Card>
         )}
       </div>
-      <div className="grid-cols-2 lg:grid-cols-4 grid gap-4 max-w-screen-xl mx-auto">
+      <div className="grid-cols-2 lg:grid-cols-4 grid gap-4 container">
         {pricingTiersInOrder.map((t) => (
           <PricingCard key={t.name} currentTierName={tier.name} {...t} />
         ))}
@@ -128,10 +128,11 @@ function PricingCard({
       </CardHeader>
       <CardContent>
         <form
-          action={async (formData) => {
-            "use server";
-            await createCheckoutSession(name);
-          }}
+          action={
+            name === "Free"
+              ? createCancelSession
+              : createCheckoutSession.bind(null, name)
+          }
         >
           <Button
             disabled={isCurrent}

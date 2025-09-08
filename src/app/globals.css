@@ -7,9 +7,6 @@
 
 @theme {
   --container-padding: 1.5rem;
-  --container-sm: 100%;
-  --container-md: 100%;
-  --container-lg: 100%;
   --container-xl: 1200px;
 
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
