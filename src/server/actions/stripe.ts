@@ -12,17 +12,16 @@ const stripe = new Stripe(serverEnv.STRIPE_SECRET_KEY)
 
 export async function createCancelSession() {
   const user = await currentUser()
-  if (user == null) return { error: true }
+  if (user == null) throw new Error("User not authenticated.")
 
   const subscription = await getUserSubscription(user.id)
-
-  if (subscription == null) return { error: true }
+  if (subscription == null) throw new Error("Subscription not found.")
 
   if (
     subscription.stripeCustomerId == null ||
     subscription.stripeSubscriptionId == null
   ) {
-    return new Response(null, { status: 500 })
+    throw new Error("Stripe customer or subscription ID is missing.")
   }
 
   const portalSession = await stripe.billingPortal.sessions.create({
@@ -41,13 +40,12 @@ export async function createCancelSession() {
 
 export async function createCustomerPortalSession() {
   const { userId } = await auth()
-
-  if (userId == null) return { error: true }
+  if (userId == null) throw new Error("User not authenticated.")
 
   const subscription = await getUserSubscription(userId)
 
   if (subscription?.stripeCustomerId == null) {
-    return { error: true }
+    throw new Error("Stripe customer ID not found.")
   }
 
   const portalSession = await stripe.billingPortal.sessions.create({
@@ -60,15 +58,14 @@ export async function createCustomerPortalSession() {
 
 export async function createCheckoutSession(tier: PaidTierNames) {
   const user = await currentUser()
-  if (user == null) return { error: true }
+  if (user == null) throw new Error("User not authenticated.")
 
   const subscription = await getUserSubscription(user.id)
-
-  if (subscription == null) return { error: true }
+  if (subscription == null) throw new Error("Subscription data not found.")
 
   if (subscription.stripeCustomerId == null) {
     const url = await getCheckoutSession(tier, user)
-    if (url == null) return { error: true }
+    if (url == null) throw new Error("Failed to create checkout session.")
     redirect(url)
   } else {
     const url = await getSubscriptionUpgradeSession(tier, subscription)
@@ -111,7 +108,7 @@ async function getSubscriptionUpgradeSession(
     subscription.stripeSubscriptionId == null ||
     subscription.stripeSubscriptionItemId == null
   ) {
-    throw new Error()
+    throw new Error("Missing Stripe subscription details for upgrade.")
   }
 
   const portalSession = await stripe.billingPortal.sessions.create({
