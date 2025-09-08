@@ -9,8 +9,11 @@
     "lint": "eslint",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
-    "db:studio": "drizzle-kit studio"
+    "db:studio": "drizzle-kit studio",
+    "db:updateCountryGroups": "tsx --env-file=.env ./src/tasks/updateCountryGroups.ts",
+    "stripe:webhooks": "stripe listen --forward-to localhost:3000/api/webhooks/stripe"
   },
+  
   "dependencies": {
     "@clerk/nextjs": "^6.31.8",
     "@date-fns/tz": "^1.4.1",
@@ -40,6 +43,7 @@
     "react-dom": "19.1.0",
     "react-hook-form": "^7.62.0",
     "recharts": "^2.15.4",
+    "stripe": "^18.5.0",
     "svix": "^1.76.1",
     "tailwind-merge": "^3.3.1",
     "tailwindcss-animate": "^1.0.7",
