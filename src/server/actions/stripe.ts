@@ -2,7 +2,7 @@
 
 import { PaidTierNames, pricingTiers } from "@/data/priceTiers"
 import { auth, currentUser, User } from "@clerk/nextjs/server"
-import { getUserSubscription } from "../db/subscription"
+import { getUserSubscription, createUserSubscription } from "../db/subscription"
 import { Stripe } from "stripe"
 import { env as serverEnv } from "@/data/env/server"
 import { env as clientEnv } from "@/data/env/client"
@@ -14,8 +14,12 @@ export async function createCancelSession() {
   const user = await currentUser()
   if (user == null) throw new Error("User not authenticated.")
 
-  const subscription = await getUserSubscription(user.id)
-  if (subscription == null) throw new Error("Subscription not found.")
+  let subscription = await getUserSubscription(user.id)
+  if (!subscription) {
+    await createUserSubscription({ clerkUserId: user.id, tier: "Free" })
+    subscription = await getUserSubscription(user.id)
+    if (!subscription) throw new Error("Subscription creation failed.")
+  }
 
   if (
     subscription.stripeCustomerId == null ||
@@ -42,9 +46,14 @@ export async function createCustomerPortalSession() {
   const { userId } = await auth()
   if (userId == null) throw new Error("User not authenticated.")
 
-  const subscription = await getUserSubscription(userId)
+  let subscription = await getUserSubscription(userId)
+  if (!subscription) {
+    await createUserSubscription({ clerkUserId: userId, tier: "Free" })
+    subscription = await getUserSubscription(userId)
+    if (!subscription) throw new Error("Subscription creation failed.")
+  }
 
-  if (subscription?.stripeCustomerId == null) {
+  if (subscription.stripeCustomerId == null) {
     throw new Error("Stripe customer ID not found.")
   }
 
@@ -60,8 +69,12 @@ export async function createCheckoutSession(tier: PaidTierNames) {
   const user = await currentUser()
   if (user == null) throw new Error("User not authenticated.")
 
-  const subscription = await getUserSubscription(user.id)
-  if (subscription == null) throw new Error("Subscription data not found.")
+  let subscription = await getUserSubscription(user.id)
+  if (!subscription) {
+    await createUserSubscription({ clerkUserId: user.id, tier: "Free" })
+    subscription = await getUserSubscription(user.id)
+    if (!subscription) throw new Error("Subscription creation failed.")
+  }
 
   if (subscription.stripeCustomerId == null) {
     const url = await getCheckoutSession(tier, user)

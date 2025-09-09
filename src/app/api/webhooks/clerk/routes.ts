@@ -7,7 +7,7 @@ import {
   getUserSubscription,
 } from "@/server/db/subscription"
 import { deleteUser } from "@/server/db/users"
-import { Stripe } from "stripe" 
+import Stripe from "stripe"
 
 const stripe = new Stripe(env.STRIPE_SECRET_KEY)
 
@@ -18,9 +18,7 @@ export async function POST(req: Request) {
   const svixSignature = (await headerPayload).get("svix-signature")
 
   if (!svixId || !svixTimestamp || !svixSignature) {
-    return new Response("Error occurred -- no svix headers", {
-      status: 400,
-    })
+    return new Response("Error occurred -- no svix headers", { status: 400 })
   }
 
   const payload = await req.json()
@@ -37,9 +35,7 @@ export async function POST(req: Request) {
     }) as WebhookEvent
   } catch (err) {
     console.error("Error verifying webhook:", err)
-    return new Response("Error occurred", {
-      status: 400,
-    })
+    return new Response("Error occurred", { status: 400 })
   }
 
   switch (event.type) {
@@ -47,21 +43,23 @@ export async function POST(req: Request) {
       await createUserSubscription({
         clerkUserId: event.data.id,
         tier: "Free",
+        stripeCustomerId: null,
+        stripeSubscriptionId: null,
+        stripeSubscriptionItemId: null,
       })
       break
     }
     case "user.deleted": {
-      if (event.data.id != null) {
+      if (event.data.id) {
         const userSubscription = await getUserSubscription(event.data.id)
-        if (userSubscription?.stripeSubscriptionId != null) {
-          await stripe.subscriptions.cancel(
-            userSubscription?.stripeSubscriptionId
-          )
+        if (userSubscription?.stripeSubscriptionId) {
+          await stripe.subscriptions.cancel(userSubscription.stripeSubscriptionId)
         }
         await deleteUser(event.data.id)
       }
+      break
     }
   }
 
-  return new Response("", { status: 200 })
+  return new Response("ok", { status: 200 })
 }
