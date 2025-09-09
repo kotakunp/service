@@ -1,4 +1,4 @@
-# Service
+# EzMuzik SaaS website
 
 A **Next.js 15 full-stack application** using TypeScript, Drizzle ORM, Stripe, and Clerk for authentication. This project manages products, subscriptions, and analytics for users.
 
