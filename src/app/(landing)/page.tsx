@@ -22,23 +22,22 @@ export default function HomePage() {
     <>
       <section className="min-h-screen flex items-center justify-center text-center text-balance flex-col gap-8 px-4 bg-radial">
         <h1 className="text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight m-4">
-          This is a test website
+          Empower Your Music. Anywhere.
         </h1>
         <p className="text-lg lg:text-3xl max-w-screen-xl">
-          this is just a bunch of text that should look like there is a cool
-          description here
+          Manage, promote, and grow your music with EzMuzik. Get analytics,
+          customizable banners, and up to 100 digital products—everything you
+          need to reach more listeners.
         </p>
         <SignUpButton>
           <Button className="flex text-lg p-6 rounded-xl gap-2">
-            Lezgo <ArrowRightIcon className="size-5" />
+            Get started <ArrowRightIcon className="size-5" />
           </Button>
         </SignUpButton>
       </section>
       <section className="bg-primary text-primary-foreground">
         <div className="py-16 flex flex-col gap-16 px-8 md:px-16">
-          <h2 className="text-3xl text-center text-balance">
-            Second section text
-          </h2>
+          <h2 className="text-3xl text-center text-balance">Trusted By</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-16">
             <Link href="https://youtube.com/@kotakunp">
               <TestIcon />
@@ -72,7 +71,7 @@ export default function HomePage() {
       </section>
       <section id="pricing" className="px-8 py-16 bg-accent/5">
         <h2 className="text-4xl text-center text-balance font-semibold mb-8">
-          Just a pricing section text that i will change later
+          Monthly plans
         </h2>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-screen-xl mx-auto">
           {pricingTiersInOrder.map((tier) => (
@@ -80,7 +79,10 @@ export default function HomePage() {
           ))}
         </div>
       </section>
-      <footer className="container mx-auto pt-16 pb-8 flex flex-col sm:flex-row gap-8 sm:gap-4 justify-between items-start">
+      <footer
+        id="footer"
+        className="container mx-auto pt-16 pb-8 flex flex-col sm:flex-row gap-8 sm:gap-4 justify-between items-start"
+      >
         <Link href="/">
           <BrandLogo />
         </Link>
@@ -89,8 +91,8 @@ export default function HomePage() {
             <FooterLinkGroup
               title="About"
               links={[
-                { label: "EzMuzik services", href: "#" },
-                { label: "Muzik labels", href: "#" },
+                { label: "EzMuzik team", href: "#" },
+                { label: "EzMuzik servies", href: "#" },
               ]}
             />
           </div>
@@ -106,15 +108,18 @@ export default function HomePage() {
           </div>
           <div className="flex flex-col gap-8">
             <FooterLinkGroup
-              title="Request"
-              links={[{ label: "Submit request", href: "#" }]}
+              title="Support"
+              links={[
+                { label: "Submit request", href: "#" },
+                { label: "Contact us", href: "#" },
+              ]}
             />
             <FooterLinkGroup
               title="Products"
               links={[
                 { label: "Vocal synth", href: "#" },
-                { label: "Virtual models", href: "#" },
                 { label: "VST Plugins", href: "#" },
+                { label: "Sample Packs", href: "#" },
               ]}
             />
           </div>
@@ -169,9 +174,9 @@ function PricingCard({
           {maxNumberOfProducts}{" "}
           {maxNumberOfProducts === 1 ? "product" : "products"}
         </Feature>
-        {canAccessAnalytics && <Feature> Analytics access</Feature>}
-        {canCustomizeBanner && <Feature> Banner customization</Feature>}
-        {canRemoveBranding && <Feature> Removable EzMuzik branding</Feature>}
+        {canAccessAnalytics && <Feature> Analytics dashboard </Feature>}
+        {canCustomizeBanner && <Feature> Scalable Cloud Database </Feature>}
+        {canRemoveBranding && <Feature> Removable EzMuzik branding </Feature>}
       </CardFooter>
     </Card>
   );
