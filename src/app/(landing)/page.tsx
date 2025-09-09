@@ -4,7 +4,14 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import TestIcon from "./_icons/logo";
 import { pricingTiersInOrder } from "@/data/priceTiers";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { formatCompactNumber } from "@/lib/formatters";
 import { ReactNode } from "react";
 import { cn } from "@/lib/utils";
@@ -18,7 +25,8 @@ export default function HomePage() {
           This is a test website
         </h1>
         <p className="text-lg lg:text-3xl max-w-screen-xl">
-          this is just a bunch of text that should look like there is a cool description here
+          this is just a bunch of text that should look like there is a cool
+          description here
         </p>
         <SignUpButton>
           <Button className="flex text-lg p-6 rounded-xl gap-2">
@@ -67,7 +75,7 @@ export default function HomePage() {
           Just a pricing section text that i will change later
         </h2>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-screen-xl mx-auto">
-          {pricingTiersInOrder.map(tier => (
+          {pricingTiersInOrder.map((tier) => (
             <PricingCard key={tier.name} {...tier} />
           ))}
         </div>
@@ -78,11 +86,13 @@ export default function HomePage() {
         </Link>
         <div className="flex flex-col sm:flex-row gap-8">
           <div className="flex flex-col gap-8">
-            <FooterLinkGroup title="About" links={[
-            { label: "EzMuzik services", href: "#"},
-            { label: "Muzik labels", href: "#"},
-          ]}
-          />
+            <FooterLinkGroup
+              title="About"
+              links={[
+                { label: "EzMuzik services", href: "#" },
+                { label: "Muzik labels", href: "#" },
+              ]}
+            />
           </div>
           <div className="flex flex-col gap-8">
             <FooterLinkGroup
@@ -97,9 +107,7 @@ export default function HomePage() {
           <div className="flex flex-col gap-8">
             <FooterLinkGroup
               title="Request"
-              links={[
-                { label: "Submit request", href: "#" }
-              ]}
+              links={[{ label: "Submit request", href: "#" }]}
             />
             <FooterLinkGroup
               title="Products"
@@ -113,10 +121,10 @@ export default function HomePage() {
         </div>
       </footer>
     </>
-  )
+  );
 }
 
-function PricingCard ({
+function PricingCard({
   name,
   priceInCents,
   maxNumberOfVisits,
@@ -125,22 +133,32 @@ function PricingCard ({
   canAccessAnalytics,
   canCustomizeBanner,
 }: (typeof pricingTiersInOrder)[number]) {
-  const isMostPopular = name === "Standart"
-
+  const isMostPopular = name === "Standart";
 
   return (
-    <Card>
+    <Card
+      className={cn(
+        "relative shadow-none rounded-3xl overflow-hidden",
+        isMostPopular ? "border-accent border-2" : "border-none"
+      )}
+    >
+      {isMostPopular && (
+        <div className="bg-accent text-accent-foreground absolute py-1 px-10 -right-8 top-24 rotate-45 origin-top-right">
+          Most popular
+        </div>
+      )}
       <CardHeader>
         <div className="text-accent font-semibold mb-8">{name}</div>
         <CardTitle>${priceInCents / 100} /mo</CardTitle>
         <CardDescription>
           {formatCompactNumber(maxNumberOfVisits)} pricing page visits/mo
-          </CardDescription>
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <SignUpButton>
-          <Button className="text-lg w-full rounded-lg"
-                  variant={isMostPopular ? "destructive" : "default"}
+          <Button
+            className="text-lg w-full rounded-lg"
+            variant={isMostPopular ? "destructive" : "default"}
           >
             Get Started
           </Button>
@@ -156,29 +174,41 @@ function PricingCard ({
         {canRemoveBranding && <Feature> Removable EzMuzik branding</Feature>}
       </CardFooter>
     </Card>
-  )
+  );
 }
 
-function Feature({ children, className }: { children: ReactNode, className?: string}) {
+function Feature({
+  children,
+  className,
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
   return (
     <div className={cn("flex items-center gap-2", className)}>
       <CheckIcon className="size-4 stroke-accent bg-accent/25 rounded-full p-0.5" />
       <span>{children}</span>
     </div>
-  )
+  );
 }
 
-function FooterLinkGroup ({ title, links, }: {title: string; links: { label: string; href: string }[]}) {
+function FooterLinkGroup({
+  title,
+  links,
+}: {
+  title: string;
+  links: { label: string; href: string }[];
+}) {
   return (
     <div className="flex flex-col gap-4">
       <h3 className="font-semibold">{title}</h3>
       <ul className="flex flex-col gap-2 text-sm">
-        {links.map(link => (
+        {links.map((link) => (
           <li key={`${link.label}`}>
             <Link href={link.href}>{link.label}</Link>
           </li>
         ))}
       </ul>
     </div>
-  )
+  );
 }
